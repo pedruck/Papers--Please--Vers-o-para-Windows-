@@ -1,8 +1,10 @@
 #include "raylib.h"
 
+
+
 char Mensagem[100];
 
-void LoadDialogo (int PessoaCount)
+void LoadDialogo (int PessoaCount)                                          
 {
 
 
@@ -17,9 +19,9 @@ char MensagemRandom[8][100] = {"Fila tava muito longa meu deus.\nSe tu n me apro
 
 
 
-int Randomizador = GetRandomValue(0, 7);
+int Randomizador = GetRandomValue(0, 7);   // valor min e max; pega um valor inteiro entre esses valores
 
-strcpy(Mensagem, MensagemRandom[Randomizador]);
+strcpy(Mensagem, MensagemRandom[Randomizador]); //coloca a mensagem escolhida no vetor "Mensagem"
 
 
 }

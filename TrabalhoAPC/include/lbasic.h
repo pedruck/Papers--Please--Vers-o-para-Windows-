@@ -1,18 +1,19 @@
 #include "raylib.h"
 
 
+//header guard (evitar dupla inclusão)
 
 #ifndef LIBBASICA
 #define LIBBASICA
 
-typedef struct Vetor2D {
+typedef struct Vetor2D {                                                              //ponto no espaco
     float x;                
     float y;                
 } Vetor2D;
 
 typedef struct Retangulo{
-    float x;                // x e y sao as posições do ponto superior esquerdo do retangulo
-    float y;                
+    float x;                // x e y sao as posicoes do ponto superior esquerdo do retangulo
+    float y;                // interacao de botoes
     float largura;            
     float altura;           
 } Retangulo;
@@ -28,7 +29,7 @@ bool ChecagemColisaoPontoRetangulo(Vetor2D point, Retangulo rec)
 
     return colisao;
 
-    //checa se um ponto especifico esta dentro do retangulo em questao no momento da execução
+    //checa se um ponto especifico esta dentro do retangulo em questao no momento da execucao
 }
 
 bool MouseDown(int input)
@@ -38,17 +39,17 @@ bool MouseDown(int input)
 
     return isDown;
 
-    //checa se o botao do mouse em questao esta sendo pressionado no momento da execução
+    //checa se o botao do mouse em questao esta sendo pressionado no momento da execucao
 
 }
 
 void DrawTextoPro(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint)
 {
-    if (font.texture.id == 0) font = GetFontDefault();  // Security check in case of not valid font
+    if (font.texture.id == 0) font = GetFontDefault();  // Security check in case of not valid font //mudanca de espacamento
 
     int size = TextLength(text);    // Total size in bytes of the text, scanned by codepoints in loop
 
-    float textOffsetY = 2;          // Offset between lines (on linebreak '\n')
+    float textOffsetY = 2;          // Offset between lines (on linebreak '\n') (de 1 para 2)
     float textOffsetX = 0.0f;       // Offset X to next character to draw
 
     float scaleFactor = fontSize/font.baseSize;         // Character quad scaling factor

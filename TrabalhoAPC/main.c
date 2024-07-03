@@ -103,6 +103,8 @@ Vetor2D ProcuradosLocation;
 
 bool AvalicaoFoiFeita;
 
+
+//funcao que chama a proxima pessoa (reseta as variaveis e chama a proxima pessoa)
 void ProximaPessoa()
 {
         
@@ -123,18 +125,20 @@ void ProximaPessoa()
             ScanFeito = false;
             ScanSemNecessidade = false;
 
+            
+
 }
 
 
 
-void UpdateFrames(void)
+void UpdateFrames(void) //TUDOD com "update" roda a cada frame
 {
 
-    if(AvalicaoFoiFeita == false)
-    {
+   if(AvalicaoFoiFeita == false)
+   {
         passaporteText = LoadTexture("Textures/passport-blank.png");
         raioxtext = LoadTexture("Textures/BodyM1.png");
-    }
+   }
 
 }
 
@@ -142,7 +146,7 @@ void UpdateFrames(void)
 
 void UpdateDrawFrame(void);     // Update 
 
-int WinMain(void)
+int WinMain(void) //Inicializa o jogo
 {
     
     ProcuradosLocation.x = -1000;
@@ -150,7 +154,9 @@ int WinMain(void)
 
     RegrasLocation.x = -1000;
     RegrasLocation.y = -1000;
+
     Count = 0;
+
     JanelaPosicao.x = 0;
     JanelaPosicao.y = -625;
 
@@ -190,7 +196,7 @@ int WinMain(void)
     Procurados = LoadTexture("Textures/procurados.png");
     DemitidoT = LoadTexture("Textures/demissao.png");
     
-    LoadProcurados();
+    
     
     TransicaoPessoa = false;
 
@@ -267,26 +273,34 @@ int WinMain(void)
     scan.y = 560;
     scan.altura = 50;
     scan.largura = 50;
-    
+
+
+    LoadProcurados();
+
     LoadPessoas(Count);
+
     LoadDialogo(Count);
     
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
 #else
-    SetTargetFPS(60);   // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60);   // TRAVA O JOGO EM 60 FPS
+
     //--------------------------------------------------------------------------------------//
 
-#endif
+#endif // tudo dentro do endif so roda UMA VEZ
 
 // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+    while (!WindowShouldClose())   
     { 
-        if (IsKeyPressed(KEY_F11))
-            ToggleFullscreen();
+
+        
+        if (IsKeyPressed(KEY_F11)) ToggleFullscreen();
+            
         
         UpdateDrawFrame();
+        
         UpdateMusicStream(music);
 
         procuradoIconeAberto = false;
@@ -369,6 +383,8 @@ int WinMain(void)
         if (AnimFrameCounter == 60) PessoaPosition.y += 5;
         else if (AnimFrameCounter == 120) PessoaPosition.y -= 5;
 
+        
+
         if(AnimFrameCounter2 > 250 && TransicaoPessoa == true)
         {
 
@@ -390,7 +406,7 @@ int WinMain(void)
 
         
         
-        //-----------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------   
 
 
 
@@ -451,7 +467,7 @@ void UpdateDrawFrame(void)
     if (GetMouseX() < screenWidth-1 && GetMouseY() < screenHeight-1)
         {
             LocalizacaoMouse.x = GetMouseX();
-            LocalizacaoMouse.y = GetMouseY();
+            LocalizacaoMouse.y = GetMouseY();                           //limita o valor do clique do mouse a area da tela
         }
 
 
@@ -488,7 +504,7 @@ void UpdateDrawFrame(void)
         else if (MouseDown(0) == false && LocalizacaoMouse.x > 640 + passaporte.largura/2 && passaporte.y < 610)
         {
 
-            drag = false;
+            drag = false;                               //limitado ao espaco preto
 
         }
 
@@ -679,7 +695,7 @@ void UpdateDrawFrame(void)
     if (ChecagemColisaoPontoRetangulo(LocalizacaoMouse, aprovar) == true && IsMouseButtonPressed(0) == true)
     {
 
-        if (PessoaValida() == false) pontuacao -= 15;
+        if (PessoaValida() == false) pontuacao -= 15;               //quando clicar em aprovar
 
         if (ScanSemNecessidade == true) pontuacao -= 10;
 
@@ -696,7 +712,7 @@ void UpdateDrawFrame(void)
 
         if (PessoaValida() == true) pontuacao -= 15;
         
-        if (ScanSemNecessidade == true) pontuacao -= 10;
+        if (ScanSemNecessidade == true) pontuacao -= 10;        //quando clicar em rejeitar
         PlaySound(ProximaPessoaSound);
         TransicaoPessoa = true;
 
@@ -706,10 +722,10 @@ void UpdateDrawFrame(void)
 
     }
 
-   if (ChecagemColisaoPontoRetangulo(LocalizacaoMouse, scan) == true && IsMouseButtonPressed(0) == true)
+    if (ChecagemColisaoPontoRetangulo(LocalizacaoMouse, scan) == true && IsMouseButtonPressed(0) == true)
     {
 
-        if (PesoCheck() == true) ScanSemNecessidade = true;
+        if (PesoCheck() == true) ScanSemNecessidade = true;     //quando fizer scan
 
         ScanFeito = true;
     
@@ -722,7 +738,7 @@ void UpdateDrawFrame(void)
     if (ChecagemColisaoPontoRetangulo(LocalizacaoMouse, deter) == true && IsMouseButtonPressed(0) == true)
     {
 
-        if (PessoaBombada() == false && Procurado == false) pontuacao -= 30;
+        if (PessoaBombada() == false && Procurado == false) pontuacao -= 30;        //quando deter
         PlaySound(ProximaPessoaSound);
         TransicaoPessoa = true;
         
@@ -746,7 +762,7 @@ void UpdateDrawFrame(void)
     {
 
         Demitido.x = -1000;
-        Demitido.y = 1000;
+        Demitido.y = -1000;
 
         
     }
@@ -818,17 +834,7 @@ void UpdateDrawFrame(void)
         DrawTexture(Procurados, ProcuradosLocation.x + 400, ProcuradosLocation.y, WHITE);
         DrawTextureEx(Procurado1Passaporte.Foto, (Vector2){ProcuradosLocation.x + 443, ProcuradosLocation.y + 158}, 0.0, 0.2, WHITE);
         DrawTextureEx(Procurado2Passaporte.Foto, (Vector2){ProcuradosLocation.x + 443, ProcuradosLocation.y + 305}, 0.0, 0.2, WHITE);
-
-
-        
-
-
-
-
-
-        
-        
-
+                                                                                                            //   rotacao scale
         
 
          DrawTextureEx(DemitidoT, (Vector2) {Demitido.x, Demitido.y}, 0.0, 1.1, WHITE);

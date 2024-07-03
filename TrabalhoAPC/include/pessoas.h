@@ -5,7 +5,7 @@
 
 
 
-Texture2D PessoaSprite;
+Texture2D PessoaSprite;             // struct q carrega imagem (raylib)
 Texture2D PassaporteSprite;
 Texture2D PessoaRaioX;
 
@@ -19,20 +19,15 @@ struct Vencimento
 
 struct Vencimento vencimento;
 
-int IDData;
+//int IDData;
 
-struct FotoPessoa
+struct FotoPessoa        
 {
-
+    
     Texture2D Foto;
-
-
     int FotoID;
     int altura;
     bool Procurado;
-    
-
-    
 
 };
 
@@ -40,10 +35,13 @@ int Random;
 char Sexo;
 int Peso;
 int PesoPassaporte;
-int alturaPassaporte;
+int alturaPassaporte;          
 int P, S;
-bool alturaErrada;
-int dia;
+
+
+
+
+int dia; //ESSES 3 SAO O DIA ATUAL
 int mes;
 int ano;
 
@@ -54,14 +52,13 @@ bool PessoaErrada;
 bool Vencido;
 bool Bombastico;
 bool Procurado;
+bool alturaErrada;
 
 
 struct FotoPessoa Procurado1;
 struct FotoPessoa Procurado1Passaporte;
 struct FotoPessoa Procurado2;
 struct FotoPessoa Procurado2Passaporte;
-
-
 
 
 void LoadProcurados()
@@ -107,29 +104,36 @@ struct FotoPessoa ProcuradoPassaportM3;
     ProcuradoPassaportM3.Foto = LoadTexture("Textures/SuspeitoF3.png");
     ProcuradoPassaportM3.altura = 165 + GetRandomValue(-1, 1);
 
+
 struct FotoPessoa ProcuradosHomem[] = {ProcuradoSpriteM0, ProcuradoSpriteM1, ProcuradoSpriteM2, ProcuradoSpriteM3};
 struct FotoPessoa ProcuradosHomemPassaporte[] = {ProcuradoPassaportM0, ProcuradoPassaportM1, ProcuradoPassaportM2, ProcuradoPassaportM3};
 
+
 int random = GetRandomValue(0,1);
-int random2 = GetRandomValue(2,3);
+int random2 = GetRandomValue(2,3);                 //valores diferentes para nao terem 2 procurados iguais
+
 
 Procurado1 = ProcuradosHomem[random];
 Procurado1Passaporte = ProcuradosHomemPassaporte[random];
 
+
 Procurado2 = ProcuradosHomem[random2];
 Procurado2Passaporte = ProcuradosHomemPassaporte[random2];
 
-printf("RANDOM1: %d\n", random);
-printf("RANDOM2: %d\n", random2);
+
+//printf("RANDOM1: %d\n", random);
+//printf("RANDOM2: %d\n", random2);
 }
 
+
+//----------------------------------------------FIM DA LOGICA DOS PROCURADOS-----------------------------------------------------//
 
 void LoadInfoRandom()
 {
 
     
 
-char * PrimeiroNome;
+char * PrimeiroNome;                                       //array tava dando errado
 char * SegundoNome;
 
 char PrimeirosNomesMasculinos[11][10] = {"Erick", "Pedro","Mateus", "Felipe", "Fernando", "Mario", "Rafael", "Lucas", "Hugo", "Cezar", "Caio"};
@@ -175,7 +179,7 @@ char SegundosNomesFemininos[10][12] = {" Silva", " Alves", " Santos", " Shimizu"
 
     }
 
-    strcpy(Nome, strncat(PrimeiroNome, SegundoNome, 12));
+    strcpy(Nome, strncat(PrimeiroNome, SegundoNome, 12));             //concatenar as variaveis escolhidas
 
   
     int NumeroRandom;
@@ -235,12 +239,12 @@ char SegundosNomesFemininos[10][12] = {" Silva", " Alves", " Santos", " Shimizu"
         if (NumeroRandom2 >= 5)
         {
 
-            Bombastico = true;
+            Bombastico = true;                        //caso o peso esteja errado
 
         }
     }
     
-    if (NumeroRandom4 >= 9 && Procurado == false)
+    if (NumeroRandom4 >= 8 && Procurado == false)
     {
         Vencido = true;
         vencimento.dia = 27 - GetRandomValue(1, 26);
@@ -272,7 +276,7 @@ struct pessoas
 
     int alturaPassaporte;
 
-    char sexo;
+    char sexo;                                                           //pessoa atual e id
 
     int ID;
 
@@ -281,8 +285,7 @@ struct pessoas
     struct FotoPessoa Foto;
 
     struct FotoPessoa FotoPassaporte;
-
-    
+  
     Texture2D Raioxsprite;
     
 
@@ -290,10 +293,7 @@ struct pessoas
 
 struct pessoas PessoaAtual;
 
-struct FotoPessoa Procurado1;
-struct FotoPessoa Procurado1Passaporte;
-struct FotoPessoa Procurado2;
-struct FotoPessoa Procurado2Passaporte;
+
 
 
 int RandomProcurado;
@@ -486,9 +486,10 @@ struct FotoPessoa PassaporteMulher[] = {PassaportF0, PassaportF1, PassaportF2, P
 
     if (Sorteio < 2) PessoaErrada = true;
     else PessoaErrada = false;
+    
 
-    struct FotoPessoa PessoaAgrSprite;
-    struct FotoPessoa PessoaAgrPassaporte;
+    struct FotoPessoa PessoaAgrSprite;            
+    struct FotoPessoa PessoaAgrPassaporte;                            //variaveis temporarias para carregar ft da pessoa atual e id
 
 
 
@@ -503,6 +504,8 @@ struct FotoPessoa PassaporteMulher[] = {PassaportF0, PassaportF1, PassaportF2, P
     {
 
         PessoaAgrSprite = HomemSprite[Sorteio];
+
+        
         PessoaAgrPassaporte = PassaporteHomem[Sorteio + GetRandomValue(1, 3)];
 
     }
@@ -540,10 +543,11 @@ struct FotoPessoa PassaporteMulher[] = {PassaportF0, PassaportF1, PassaportF2, P
     }
 
     
-int RandomAltura = GetRandomValue(0, 10);
+    int RandomAltura = GetRandomValue(0, 10);
 
 
-    strcpy(PessoaAtual.nome, Nome);
+   
+    
     PessoaAtual.peso = Peso;
     PessoaAtual.pesoPassaporte = PesoPassaporte;
     PessoaAtual.altura = PessoaAgrSprite.altura;
@@ -551,7 +555,7 @@ int RandomAltura = GetRandomValue(0, 10);
     
     if (alturaErrada == true && RandomAltura > 5) PessoaAtual.alturaPassaporte = PessoaAtual.altura - GetRandomValue(10, 15);
     else if (alturaErrada == true && RandomAltura < 5) PessoaAtual.alturaPassaporte = PessoaAtual.altura + GetRandomValue(10, 15);
-    else if (alturaErrada == false) PessoaAtual.alturaPassaporte = PessoaAtual.altura;
+    else if (alturaErrada == false) PessoaAtual.alturaPassaporte = PessoaAtual.altura; //definir altura errada
 
 
     PessoaAtual.sexo = Sexo;
@@ -571,14 +575,14 @@ int RandomAltura = GetRandomValue(0, 10);
 
 }
 
-bool AlturaCheck()
+bool AlturaCheck()                                      
 {
 
     bool saida = false;
 
-    int diferenca = PessoaAtual.altura - PessoaAtual.alturaPassaporte;
+    int diferenca = PessoaAtual.altura - PessoaAtual.alturaPassaporte; 
 
-    if (diferenca > -2 && diferenca < 2)
+    if (diferenca > -2 && diferenca < 2)                                           //margem de erro de altura
     {
 
         saida = true;
@@ -594,7 +598,7 @@ bool PesoCheck()
 
     bool saida = false;
 
-    if (PessoaAtual.peso == PessoaAtual.pesoPassaporte)
+    if (PessoaAtual.peso == PessoaAtual.pesoPassaporte)                        //checagem de peso             
     {
 
         saida = true;
@@ -611,7 +615,7 @@ bool VencimentoCheck()
 
     if (Vencido == false)
     {
-        saida = true;
+        saida = true;                                               //checagem de validade
     }
 
     return saida;
@@ -623,7 +627,7 @@ bool ImagemCheck()
 
     bool saida = false;
 
-    if (PessoaAtual.Foto.FotoID == PessoaAtual.FotoPassaporte.FotoID)
+    if (PessoaAtual.Foto.FotoID == PessoaAtual.FotoPassaporte.FotoID)      //checagem de foto do id com a pessoa
     {
 
         saida = true;
@@ -640,7 +644,7 @@ bool PessoaBombada()
 
     bool saida = false;
 
-    if (Bombastico == true)
+    if (Bombastico == true)               //checa se a pessoa esta com uma bomba
     {
 
         saida = true;
@@ -652,7 +656,7 @@ bool PessoaBombada()
 }
 
 
-bool PessoaValida(void)
+bool PessoaValida(void)              //verifica se tem algum erro na pessoa
 {
 
     bool saida = false;
